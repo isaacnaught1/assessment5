@@ -12,23 +12,23 @@ const sequelize = new Sequelize(CONNECTION_STRING, {
     }
 })
 
+
+
 module.exports = {
-    seed: (req, res) => {
-        sequelize.query(`
-            drop table if exists cities;
-            drop table if exists countries;
-
-            create table countries (
-                country_id serial primary key, 
-                name varchar
-            );
-
-             CREATE TABLE cities (
-                 city_id SERIAL PRIMARY KEY,
-                 name VARCHAR NOT NULL,
-                 rating INT NOT NULL,
-                country_id INT NOT NULL REFERENCES countries(country_id)
-            );
+        seed: (req, res) => {
+            sequelize.query(`
+                drop table if exists cities;
+                drop table if exists countries;
+                create table countries (
+                    country_id serial primary key, 
+                    name varchar
+                );
+                CREATE TABLE cities (
+                    city_id SERIAL PRIMARY KEY,
+                    name VARCHAR,
+                    rating INT,
+                    country_id INT REFERENCES countries (country_id)
+                );
 
             insert into countries (name)
             values ('Afghanistan'),
@@ -263,3 +263,4 @@ module.exports = {
         .catch(err => console.log(err));
     }
 }
+
